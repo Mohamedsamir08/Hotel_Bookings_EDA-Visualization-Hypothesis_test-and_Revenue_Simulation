@@ -1,8 +1,8 @@
 # Hotel_Bookings_EDA-Visualization-Hypothesis_test-and_Revenue_Simulation
-Made Hotel Bookings EDA, Visualization, Hypothesis test and Revenue Simulation
+Made Hotel Bookings EDA, Visualization, Hypothesis test and Revenue Simulation.
 
 ### Hotel Booking Analysis
-This project focuses on the analysis of a dataset containing hotel bookings information. The dataset includes a range of features providing detailed insights into the booking habits, customer characteristics, and the nature of bookings.
+This project focuses on the analysis of a dataset containing hotel bookings information. The dataset includes a range of features providing detailed insights into the booking habits, customer characteristics, and the nature of bookings, Hypothesis test and Revenue Simulation.
 
 ### Dataset
 The dataset consists of 119,390 rows (bookings) and 32 columns (features), including:
