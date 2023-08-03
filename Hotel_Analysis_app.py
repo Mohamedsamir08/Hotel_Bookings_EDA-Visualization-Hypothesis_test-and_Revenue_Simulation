@@ -11,7 +11,51 @@ def load_data():
     df = pd.read_csv('final_hotel_bookings.csv')
     return df
 
+def introduction():
+    st.title('Introduction')
+    st.header('Hotel booking')
+    st.markdown('''
+    Content:
 
+    ### EDA
+
+    The dataset contains data from two different hotels "Resort hotel and City hotel".
+
+    The data contains "bookings due to arrive between the 1st of July of 2015 and the 31st of August 2017".
+
+    ### Topics covered and questions to answer from the data:
+
+    1-What is the distribution of the data?
+                
+    2-What is the total count of bookings per hotel?
+                
+    3-Where are the guests coming from?
+                
+    4-What is the average revenue per country?
+                
+    5-What is the distribution of the number of bookings by season?
+                
+    6-What are the total bookings versus total cancellations for the top 10 countries?
+                
+    7-What are the total bookings versus total cancellations by market segment?
+                
+    8-What are the total bookings versus total cancellations by deposit type?
+                
+    9-What is the distribution of guest types and average daily rates (ADR)?
+                
+    10-What is the percentage of repeated guests by deposit type?
+                
+    11-How many bookings were canceled?
+                
+    12-Which month has the highest number of cancellations?
+                
+    13-Does the lead time affect cancellation rates?
+                
+    14-What is the total average daily rate (ADR) for 'Not Canceled' and 'Canceled' bookings?
+                
+    15-Could the revenue increase if the hotel could reduce the cancellation rate?
+                
+    ''')
 
 def overview(df):
     st.title("Numerical Variables Overview")
@@ -304,9 +348,11 @@ def advanced_analysis(df):
 
 
 df = load_data()
-page = st.sidebar.selectbox("Choose Analysis Type", ["Overview", "Booking Analysis", "ADR Analysis", "Cancellation Analysis", "Guest Analysis", "Advanced Analysis"])
+page = st.sidebar.selectbox("Choose Analysis Type", ["Introduction", "Overview", "Booking Analysis", "ADR Analysis", "Cancellation Analysis", "Guest Analysis", "Advanced Analysis"])
 
-if page == "Overview":
+if page == "Introduction":
+    introduction()
+elif page == "Overview":
     overview(df)
 elif page == "Booking Analysis":
     booking_analysis(df)
