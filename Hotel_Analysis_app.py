@@ -11,15 +11,10 @@ def load_data():
     df = pd.read_csv('final_hotel_bookings.csv')
     return df
 
-# Load the data
-df_desc = pd.read_excel('column_descriptions.xlsx')
+
 
 def overview(df):
     st.title("Numerical Variables Overview")
-
-    st.markdown("""- **Columns Description.**""")
-    # Display the data
-    st.table(df_desc)
 
     st.subheader("Distribution of Key Numerical Variables")
     st.markdown("""
