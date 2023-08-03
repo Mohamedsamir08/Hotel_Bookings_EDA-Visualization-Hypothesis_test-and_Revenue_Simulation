@@ -13,7 +13,7 @@ def load_data():
 
 def introduction():
     st.title('Introduction')
-    st.image('https://github.com/Mohamedsamir08/Hotel_Bookings_EDA-Visualization-Hypothesis_test-and_Revenue_Simulation/blob/Main-Epslion-AI/Hotel_Image.jpg', caption='Hotel Booking Analysis', use_column_width=True)
+    st.image('Hotel_Image.jpg', caption='Hotel Booking Analysis')
     st.header('Hotel booking')
     st.markdown('''
     Content:
