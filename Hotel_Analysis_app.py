@@ -13,7 +13,7 @@ def load_data():
 
 def introduction():
     st.title('Introduction')
-    st.image('Hotel_Image.jpg', caption='Your Caption', use_column_width=True, channels='RGB')
+    st.image('Hotel_Image.jpg', caption='Hotel Booking Analysis', use_column_width=True, channels='RGB')
     st.header('Hotel booking')
     st.markdown('''
     Content:
