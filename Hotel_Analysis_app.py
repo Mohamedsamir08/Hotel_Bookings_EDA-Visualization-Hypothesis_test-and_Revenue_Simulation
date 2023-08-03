@@ -15,6 +15,14 @@ def overview(df):
     st.title("Overview")
 
     st.subheader("Distribution of Key Numerical Variables")
+    st.markdown("""
+    Below are histograms showing the distribution of key numerical variables in the dataset. 
+
+    - **Lead Time Distribution**: Most of the bookings have a lead time of less than 200 days. However, there are bookings with a lead time of up to 700 days. 
+    - **ADR (Average Daily Rate) Distribution**: The ADR has a somewhat right-skewed distribution, with most of the rates less than 200. However, there are a few bookings with a higher rate.
+    - **Arrival Date (Day of Month) Distribution**: The arrival day of the month is fairly distributed, with slight dips at the end of the month. except for the end of the month, which shows that we recieve a higher number of guests by the end of each month.
+    - **Arrival Date (Week Number) Distribution**: The arrival week number shows a bimodal distribution, with peaks around week 30 (mid-July) and week 40 (early October). This suggests that there are more bookings during the summer.
+    """)
     fig, axes = plt.subplots(2, 2, figsize=(15, 10))
     sns.histplot(df['lead_time'], kde=True, ax=axes[0, 0])
     sns.histplot(df['adr'], kde=False, bins=30, ax=axes[0, 1])
@@ -32,22 +40,30 @@ def booking_analysis(df):
     st.title("Booking Analysis")
 
     st.subheader("Distribution of Total Bookings per Hotel Types")
+    st.markdown("""
+    - The distribution of bookings between the two types of hotels in the dataset shows that City Hotel has significantly more bookings than Resort Hotel.
+    """)
     fig, ax = plt.subplots(figsize=(8,6))
     sns.countplot(x='hotel', data=df, ax=ax)
     st.pyplot(fig)
 
     st.subheader("Number of Bookings for Each Month")
+    st.markdown("""- The number of bookings varies across the months, with August being the month with the most bookings and January being the month with the least bookings.""")
     months_order = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     fig, ax = plt.subplots(figsize=(12,6))
     sns.countplot(x='arrival_date_month', data=df, order=months_order, ax=ax)
     st.pyplot(fig)
 
     st.subheader("Distribution of Number of Bookings in Seasons")
+    st.markdown("""- Most bookings are made in Summer, followed by Spring, Fall, and Winter.""")
+
     fig, ax = plt.subplots(figsize=(8,6))
     sns.countplot(x='season', data=df, ax=ax)
     st.pyplot(fig)
 
     st.subheader("Top 10 Countries with the Most Bookings")
+    st.markdown("""- the majority of bookings are from guests in Portugal (PRT), followed by Great Britain (GBR), France (FRA), Spain (ESP), and Germany (DEU). The other countries in the top 10 are Ireland (IRL), Italy (ITA), Belgium (BEL), Brazil (BRA), and the Netherlands (NLD).""")
+
     top_countries = df['country'].value_counts().head(10)
     fig, ax = plt.subplots(figsize=(10,6))
     sns.barplot(x=top_countries.index, y=top_countries.values, ax=ax)
@@ -57,12 +73,15 @@ def adr_analysis(df):
     st.title("ADR (Average Daily Rate) Analysis")
 
     st.subheader("Average Daily Rate (ADR) by Hotel Type")
+    st.markdown("""- The average daily rate (ADR) is higher for City Hotel compared to Resort Hotel.""")
+
     hotel_adr_mean = df.groupby('hotel')['adr'].mean().reset_index()
     fig, ax = plt.subplots(figsize=(8, 6))
     sns.barplot(x='hotel', y='adr', data=hotel_adr_mean, ax=ax)
     st.pyplot(fig)
 
     st.subheader("Total ADR for Each Month")
+    st.markdown("""- The average daily rate (ADR) is higher for City Hotel compared to Resort Hotel.""")
     months_order = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     total_adr_month = df.groupby('arrival_date_month')['adr'].sum().reindex(months_order)
     fig, ax = plt.subplots(figsize=(12,6))
@@ -70,6 +89,7 @@ def adr_analysis(df):
     st.pyplot(fig)
 
     st.subheader("Average ADR for Top 10 Countries with the Most Bookings")
+    st.markdown("""- Guests from Portugal (PRT), which has the highest number of bookings, have a lower average ADR compared to some other countries.""")
     top_countries_adr = df['country'].value_counts().index[:10]
     df_top_countries_adr = df[df['country'].isin(top_countries_adr)]
     avg_adr_countries = df_top_countries_adr.groupby('country')['adr'].mean()
@@ -80,6 +100,7 @@ def adr_analysis(df):
 
 def cancellation_analysis(df):
     st.subheader('Total Bookings vs Total Cancellations (Top 10 Countries)')
+    st.markdown("""- The top 10 countries with the highest number of bookings also have a significant number of cancellations. Portugal (PRT) has the highest number of bookings and cancellations, indicating a high demand from this country but also a high likelihood of cancellation.""")
     # Calculate the number and proportion of cancellations for each country
     country_cancellations = df[df['is_canceled'] == 1]['country'].value_counts()
     country_cancellations_proportion = df[df['is_canceled'] == 1]['country'].value_counts(normalize=True)
@@ -103,6 +124,7 @@ def cancellation_analysis(df):
     plt.clf()
 
     st.subheader('Proportion of Cancellations by Guest Type')
+    st.markdown("""- Couples have the highest cancellation rate, followed by families, groups, and single guests.""")
     # Calculate the proportion of bookings that were cancelled for each guest type
     guest_cancellations = df.groupby('guest_type')['is_canceled'].mean()
 
@@ -112,6 +134,8 @@ def cancellation_analysis(df):
     plt.clf()
 
     st.subheader('Total Bookings vs Total Cancellations (Market Segment)')
+    st.markdown("""- The 'Online TA' market segment has the highest number of bookings and cancellations, followed by 'Offline TA/TO' and 'Groups'. The 'Complementary', 'Aviation', and 'Undefined' segments have the least number of bookings and cancellations.""")
+
     # Calculate the total number of bookings and cancellations for each market segment
     market_segment_bookings = df['market_segment'].value_counts()
     market_segment_cancellations = df[df['is_canceled'] == 1]['market_segment'].value_counts()
@@ -128,6 +152,7 @@ def cancellation_analysis(df):
     plt.clf()
 
     st.subheader('Total Bookings vs Total Cancellations by Deposit Type')
+    st.markdown("""- The 'No Deposit' type has the highest number of bookings and cancellations, but the cancellation percentage is lower compared to the 'Non Refund' type, which has a cancellation rate of almost 100%. 'Refundable' deposits have the lowest number of bookings and cancellations, but their cancellation rate is similar to 'No Deposit'.""")
     # Calculate total bookings for each deposit type
     deposit_total_bookings = df['deposit_type'].value_counts()
 
@@ -151,6 +176,7 @@ def guest_analysis(df):
     st.title("Guest Analysis")
 
     st.subheader("Guest Type Distribution")
+    st.markdown("""- Most of the guests are Couple, followed by Single, Family, and Group.""")
     guest_type_counts = df['guest_type'].value_counts()
     fig, ax = plt.subplots(figsize=(6, 6))
     ax.pie(guest_type_counts, labels=guest_type_counts.index, autopct='%1.1f%%', startangle=140)
@@ -158,6 +184,7 @@ def guest_analysis(df):
     st.pyplot(fig)
 
     st.subheader("ADR Share per Guest Type")
+    st.markdown("""- Couple guests contribute the most to the total ADR, followed by Single, Family, and Group.""")
     total_adr_per_category = df.groupby('guest_type')['adr'].sum()
     fig, ax = plt.subplots(figsize=(6, 6))
     ax.pie(total_adr_per_category, labels=total_adr_per_category.index, autopct='%1.1f%%', startangle=140)
@@ -165,6 +192,7 @@ def guest_analysis(df):
     st.pyplot(fig)
 
     st.subheader('Repeated Guests by Deposit Type')
+    st.markdown("""- The 'No Deposit' type also has the highest number of repeated guests, followed by 'Non Refund' and 'Refundable'. The percentage of repeated guests is highest for 'No Deposit', followed by 'Refundable' and 'Non Refund'.""")
     # Filter data for repeated guests
     repeated_guests_data = df[df['is_repeated_guest'] == 1]
 
@@ -184,6 +212,7 @@ def advanced_analysis(df):
     st.title("Advanced Analysis")
 
     st.subheader("Control Chart for Lead Time")
+    st.markdown("""- The mean lead time is around 104 days, with a standard deviation of 107 days. The upper control limit (USL) is around 425 days, and the lower control limit (LSL) is 0 days. That means that the majority of bookings are made within a year before the stay.""")
     mean_lead_time = df['lead_time'].mean()
     std_dev_lead_time = df['lead_time'].std()
     USL_lead_time = mean_lead_time + 3 * std_dev_lead_time
@@ -197,6 +226,7 @@ def advanced_analysis(df):
     st.pyplot(fig)
 
     st.subheader("Cancellation Rate by Lead Time")
+    st.markdown("""- Previous graph suggests that there is a positive relationship between lead time and cancellation. the longer the time between booking and actual stay, the more likely the booking is to be cancelled.""")
     bins = [0, 60, 120, 180, 240, 300, 360, 420, 480, 540, 600, 660]
     df['lead_time_category'] = pd.cut(df['lead_time'], bins)
     cancellation_rates = df.groupby('lead_time_category')['is_canceled'].mean() * 100
@@ -205,6 +235,7 @@ def advanced_analysis(df):
     st.pyplot(fig)
 
     st.subheader("Sum of ADR for Each Category")
+    st.markdown("""- The total ADR for 'Not Canceled' bookings is higher than for 'Canceled' bookings. This might indicate that more revenue is lost due to cancellations.""")
     adr_sum_grouped = df.groupby('is_canceled')['adr'].sum().reset_index()
     adr_sum_grouped['is_canceled'] = adr_sum_grouped['is_canceled'].map({0: 'Not Canceled', 1: 'Canceled'})
     fig, ax = plt.subplots(figsize=(10, 5))
@@ -218,6 +249,9 @@ def advanced_analysis(df):
     st.pyplot(fig)
 
     st.subheader("Sum of ADR for Different Scenarios")
+    st.markdown("""- From the chart, you can clearly see the potential increase in the sum of ADR if a certain percentage of the canceled bookings were converted to not canceled. This can provide an estimate of the potential revenue increase if the hotel can reduce the cancellation rate.
+                - As we can see, there is significant potential to increase revenue by reducing the cancellation rate. Converting even a quarter of the cancelled bookings could result in an increase in total ADR by about 1.16 million. The potential increase grows with the conversion rate, reaching about 3.48 million when 75 percent of cancelled bookings are converted. 
+                """)
     # Create a DataFrame to store these values
     # Calculate the sum of ADR for not canceled and canceled bookings
     adr_sum_not_canceled = df[df['is_canceled'] == 0]['adr'].sum()
@@ -247,6 +281,23 @@ def advanced_analysis(df):
         ax.text(bar.get_x() + bar.get_width() / 2, yval + 0.1, round(yval, 2), ha='center', va='bottom')
 
     st.pyplot(fig)
+
+    st.markdown("""- Based on the cancellation analysis, hypothesis test results, and Average Daily Rate (ADR) for canceled bookings we've conducted, we can suggest several strategies to mitigate the cancellation rate:
+
+    1- Targeted Marketing for High Cancellation Countries:
+    As Portugal accounts for a large proportion of both total bookings and cancellations, it could be beneficial to focus on this market to understand the reasons behind the high cancellation rate. This could involve surveys or market research to identify any issues or concerns Portuguese customers might have, and then addressing those issues in your marketing and service offerings.
+
+    2- Reducing Lead Time:
+    The Chi-square test indicated a significant relationship between lead time and cancellation rate. Therefore, strategies to reduce lead time could help decrease cancellations. This could involve offering incentives for last-minute bookings or implementing a dynamic pricing model where prices decrease as the booking date approaches.
+
+    3- Investing in Cancellation Prevention:
+    The analysis of ADR for canceled bookings showed that reducing the cancellation rate could lead to a significant increase in revenue. This indicates that investing in cancellation prevention could be highly profitable. This could involve improving the booking process, enhancing customer service, or offering flexible cancellation policies to prevent customers from cancelling their bookings in the first place.
+
+    4- Offering Flexible Plans:
+    Offering more flexible booking options may decrease the likelihood of cancellations. This could include options such as free cancellation up to a certain number of days before the stay, or the option to reschedule the booking without additional fees.
+
+    5- Loyalty Programs:
+    Implementing a loyalty program could also help reduce cancellation rates. If customers feel valued and receive additional benefits from a loyalty program, they may be less likely to cancel their bookings.""")
 
 
 
