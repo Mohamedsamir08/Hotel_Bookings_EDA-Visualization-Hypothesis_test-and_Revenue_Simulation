@@ -12,7 +12,7 @@ def load_data():
     return df
 
 def overview(df):
-    st.title("Overview")
+    st.title("Numerical Variables Overview")
 
     st.subheader("Distribution of Key Numerical Variables")
     st.markdown("""
@@ -284,25 +284,25 @@ def advanced_analysis(df):
 
     st.markdown("""- Based on the cancellation analysis, hypothesis test results, and Average Daily Rate (ADR) for canceled bookings we've conducted, we can suggest several strategies to mitigate the cancellation rate:
 
-    1- Targeted Marketing for High Cancellation Countries:
+    1- **Targeted Marketing for High Cancellation Countries:**
     As Portugal accounts for a large proportion of both total bookings and cancellations, it could be beneficial to focus on this market to understand the reasons behind the high cancellation rate. This could involve surveys or market research to identify any issues or concerns Portuguese customers might have, and then addressing those issues in your marketing and service offerings.
 
-    2- Reducing Lead Time:
+    2- **Reducing Lead Time:**
     The Chi-square test indicated a significant relationship between lead time and cancellation rate. Therefore, strategies to reduce lead time could help decrease cancellations. This could involve offering incentives for last-minute bookings or implementing a dynamic pricing model where prices decrease as the booking date approaches.
 
-    3- Investing in Cancellation Prevention:
+    3- **Investing in Cancellation Prevention:**
     The analysis of ADR for canceled bookings showed that reducing the cancellation rate could lead to a significant increase in revenue. This indicates that investing in cancellation prevention could be highly profitable. This could involve improving the booking process, enhancing customer service, or offering flexible cancellation policies to prevent customers from cancelling their bookings in the first place.
 
-    4- Offering Flexible Plans:
+    4- **Offering Flexible Plans:**
     Offering more flexible booking options may decrease the likelihood of cancellations. This could include options such as free cancellation up to a certain number of days before the stay, or the option to reschedule the booking without additional fees.
 
-    5- Loyalty Programs:
+    5- **Loyalty Programs:**
     Implementing a loyalty program could also help reduce cancellation rates. If customers feel valued and receive additional benefits from a loyalty program, they may be less likely to cancel their bookings.""")
 
 
 
 df = load_data()
-page = st.sidebar.selectbox("Choose a page", ["Overview", "Booking Analysis", "ADR Analysis", "Cancellation Analysis", "Guest Analysis", "Advanced Analysis"])
+page = st.sidebar.selectbox("Choose Analysis Type", ["Overview", "Booking Analysis", "ADR Analysis", "Cancellation Analysis", "Guest Analysis", "Advanced Analysis"])
 
 if page == "Overview":
     overview(df)
